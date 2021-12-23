@@ -104,8 +104,18 @@ namespace RemindMe {
             Service.ClientState.TerritoryChanged += TerritoryChanged;
             TerritoryChanged(this, Service.ClientState.TerritoryType);
 
-            updateRetainerListHook = new Hook<UpdateRetainerListDelegate>(Service.SigScanner.ScanText("40 53 48 83 EC 20 48 8B 01 48 8B D9 FF 50 20 84 C0 74 0F 48 8B 03 48 8B CB 48 83 C4 20 5B 48 FF 60 18 E8"), new UpdateRetainerListDelegate(UpdateRetainerListDetour));
-            updateRetainerListHook.Enable();
+            try
+            {
+                updateRetainerListHook = new Hook<UpdateRetainerListDelegate>(
+                    Service.SigScanner.ScanText(
+                        "40 53 48 83 EC 20 48 8B 01 48 8B D9 FF 50 20 84 C0 74 0F 48 8B 03 48 8B CB 48 83 C4 20 5B 48 FF 60 18 E8"),
+                    new UpdateRetainerListDelegate(UpdateRetainerListDetour));
+                updateRetainerListHook.Enable();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Failed to load retainer list hook: {e}");
+            }
 
             SetupCommands();
         }
@@ -205,17 +215,12 @@ namespace RemindMe {
             { 38, (_, _, _) => Service.ClientState.LocalPlayer?.Level < 70 },
             { 2872, (_, _, _) => Service.ClientState.LocalPlayer?.Level < 76 },
             { 7400, ((display, monitor, pluginInterface) => {
-                // Nastrond, Only show if in Life of the Dragon
-                if (Service.ClientState.LocalPlayer.ClassJob.Id != 22) return false;
-                var jobBar = Service.JobGauges.Get<DRGGauge>();
-                return jobBar.BOTDState == BOTDState.LOTD;
-            })},
-            { 3555, ((display, monitor, pluginInterface) => {
-                // Geirskogul, Only show if not in Life of the Dragon
-                if (Service.ClientState.LocalPlayer.ClassJob.Id != 22) return false;
-                var jobBar = Service.JobGauges.Get<DRGGauge>();
-                return jobBar.BOTDState != BOTDState.LOTD;
-            })},
+                    // Nastrond, Only show if in Life of the Dragon
+                    if (Service.ClientState.LocalPlayer.ClassJob.Id != 22) return false;
+                    var jobBar = Service.JobGauges.Get<DRGGauge>();
+                    return jobBar.IsLOTDActive;
+                })
+            }
         };
 
         private List<DisplayTimer> GetTimerList(MonitorDisplay display) {
