@@ -108,7 +108,7 @@ namespace RemindMe {
             {
                 updateRetainerListHook = new Hook<UpdateRetainerListDelegate>(
                     Service.SigScanner.ScanText(
-                        "40 53 48 83 EC 20 48 8B 01 48 8B D9 FF 50 20 84 C0 74 0F 48 8B 03 48 8B CB 48 83 C4 20 5B 48 FF 60 18 E8"),
+                        "40 53 48 83 EC 20 48 8B 01 48 8B D9 FF 50 28 84 C0 74 0F 48 8B 03 48 8B CB 48 83 C4 20 5B 48 FF 60 20 E8"),
                     new UpdateRetainerListDelegate(UpdateRetainerListDetour));
                 updateRetainerListHook.Enable();
             }
