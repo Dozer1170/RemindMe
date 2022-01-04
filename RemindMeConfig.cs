@@ -112,12 +112,6 @@ namespace RemindMe
                     DrawRemindersTab();
                     ImGui.EndTabItem();
                 }
-
-                if (ImGui.BeginTabItem("Priority"))
-                {
-                    DrawPriorityTab();
-                    ImGui.EndTabItem();
-                }
             }
 
 #if DEBUG
