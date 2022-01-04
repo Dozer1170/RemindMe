@@ -225,6 +225,24 @@ namespace RemindMe {
 
                         break;
                     }
+                case 39:
+                    {
+                        // RPR
+                        StatusMonitorConfigDisplay(2586, 30); // Death's Design
+                        MeleeRoleEffects();
+
+                        break;
+                    }
+                case 40:
+                    {
+                        // SGE
+                        // TODO: Verify ids for dosis I and dosis II are correct
+                        StatusMonitorConfigDisplay(2614, 30); // Eukrasian Dosis I 
+                        StatusMonitorConfigDisplay(2615, 30); // Eukrasian Dosis II
+                        StatusMonitorConfigDisplay(2616, 30); // Eukrasian Dosis III
+
+                        break;
+                    }
                 default: {
                         ImGui.Columns(1);
                         ImGui.TextWrapped($"No status monitors are available on {Service.ClientState.LocalPlayer.ClassJob.GameData.Name}.");

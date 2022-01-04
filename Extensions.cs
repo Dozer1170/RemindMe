@@ -43,6 +43,8 @@ namespace RemindMe {
                 36 => cjc.BLU,
                 37 => cjc.GNB,
                 38 => cjc.DNC,
+                39 => cjc.RPR,
+                40 => cjc.SGE,
                 _ => false,
             };
         }
